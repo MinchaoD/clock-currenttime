@@ -1,0 +1,140 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>JS + CSS Clock</title>
+    </head>
+    <body>
+    
+    
+        <div class="clock">
+          <div class="clock-face">
+            <div class="handhour hour-hand"></div>
+            <div class="minhand min-hand"></div>
+            <div class="secondhand second-hand"></div>
+          </div>
+        </div>
+    
+    
+      <style>
+        html {
+          background:#B0C4DE;
+          background-size: cover;
+          font-family: 'helvetica neue';
+          text-align: center;
+          font-size: 10px;
+        }
+    
+        body {
+          margin: 0;
+          font-size: 2rem;
+          display: flex;
+          flex: 1;
+          min-height: 100vh;
+          align-items: center;
+        }
+    
+        .clock {
+          width: 30rem;
+          height: 30rem;
+          border: 20px solid white;
+          border-radius: 50%;
+          margin: 50px auto;
+          position: relative;
+          padding: 2rem;
+          box-shadow:
+            0 0 0 4px rgba(0,0,0,0.1),
+            inset 0 0 0 3px #EFEFEF,
+            inset 0 0 10px black,
+            0 0 10px rgba(0,0,0,0.2);
+        }
+    
+        .clock-face {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transform: translateY(-3px); /* account for the height of the clock hands */
+        }
+    
+        .minhand {
+          width: 50%;
+          height: 6px;
+          background: black;
+          position: absolute;
+          top: 50%;
+          transform-origin: 100%;
+          transform: rotate(90deg); // these 2 lines are to set the hands pointing to the vertical at 12
+          transition: all 0.05s;
+          transition-timing-function: cubic-bezier(0.1,2.7,0.58,1) // these 2 lines are for making the hand move like clicking, go forward and then back a little bit
+        }
+        
+        .handhour {
+          width: 30%;
+          height: 6px;
+          background: black;
+          position: absolute;
+          top:50%;
+          right:50%;
+          transform-origin: 100%;
+          transform: rotate(90deg); 
+          transition: all 0.05s;
+          transition-timing-function: cubic-bezier(0.1,2.7,0.58,1) // these 2 lines are for making the hand move like clicking, go forward and then back a little bit
+        }
+        
+        .secondhand {
+          width: 50%;
+          height: 2px;
+          background: red;
+          position: absolute;
+          top: 50%;
+          transform-origin: 100%;
+          transform: rotate(90deg); 
+          transition: all 0.05s;
+          transition-timing-function: cubic-bezier(0.1,2.7,0.58,1) 
+        }
+    
+      </style>
+
+      
+<script>
+
+    
+    const hourhand = document.querySelector(".hour-hand")
+    const minhand = document.querySelector(".min-hand")
+    const secondhand = document.querySelector(".second-hand")
+    
+    
+    function setTime(){
+      const now = new Date();
+      const second = now.getSeconds();
+      const secondDegree = (second / 60) * 360 + 90;
+      secondhand.style.transform = `rotate(${secondDegree}deg)`
+    
+    
+      const min = now.getMinutes();
+      const minDegree = (min / 60) * 360 + 90;
+      minhand.style.transform = `rotate(${minDegree}deg)`
+    
+      const hour = now.getHours();
+      const hourDegree = (hour / 12) * 360 + 90;
+      hourhand.style.transform = `rotate(${hourDegree}deg)`
+    
+    }
+    
+    
+    setInterval(setTime, 1000) 
+    // setInterval here is to repeatedly calls a function every 1s
+    
+    setTime()  
+    // this code is for when refreshing the page, the clock will stay at the current time. 
+    // if no thhis setTime() code here, everytime when refreshing the page, the clock will point to 12, then 
+    // start the interval to switch to the current time. 
+    
+    </script>
+    
+    
+    
+    
+    </body>
+    </html>
